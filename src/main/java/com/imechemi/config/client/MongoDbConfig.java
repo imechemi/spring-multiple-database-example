@@ -57,7 +57,6 @@ public class MongoDbConfig {
     public MongoClient schoolMongoClient(MongoProperties mongo) {
         MongoCredential credential = MongoCredential.createCredential(mongo.getUsername(), mongo.getDatabase(), mongo.getPassword());
         ConnectionString connectionString = new ConnectionString(mongo.getUri());
-        System.out.println("hey ====> " + mongo.getUsername());
         MongoClientSettings clientSettings = MongoClientSettings.builder()
                 .credential(credential)
                 .applyConnectionString(connectionString)
@@ -69,7 +68,6 @@ public class MongoDbConfig {
     public MongoClient bankMongoClient(MongoProperties mongo) {
         MongoCredential credential = MongoCredential.createCredential(mongo.getUsername(), mongo.getDatabase(), mongo.getPassword());
         ConnectionString connectionString = new ConnectionString(mongo.getUri());
-        System.out.println("hey ====> " + mongo.getUsername());
         MongoClientSettings clientSettings = MongoClientSettings.builder()
                 .credential(credential)
                 .applyConnectionString(connectionString)
