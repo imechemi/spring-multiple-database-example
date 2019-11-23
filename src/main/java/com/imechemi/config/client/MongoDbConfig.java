@@ -1,5 +1,8 @@
 package com.imechemi.config.client;
 
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
+import com.mongodb.MongoCredential;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import org.springframework.boot.autoconfigure.mongo.MongoProperties;
@@ -41,16 +44,36 @@ public class MongoDbConfig {
     @Primary
     @Bean
     public MongoDbFactory schoolMongoDbFactory (MongoProperties mongoProperties) {
-        return new SimpleMongoClientDbFactory(mongoClient(), mongoProperties.getDatabase());
+        return new SimpleMongoClientDbFactory(schoolMongoClient(mongoProperties), mongoProperties.getDatabase());
     }
 
     @Bean
     public MongoDbFactory bankMongoDbFactory(MongoProperties mongoProperties) {
-        return new SimpleMongoClientDbFactory(mongoClient(), mongoProperties.getDatabase());
+        return new SimpleMongoClientDbFactory(bankMongoClient(mongoProperties), mongoProperties.getDatabase());
     }
 
     @Bean
-    public MongoClient mongoClient() {
-        return MongoClients.create("mongodb://localhost");
+    @Primary
+    public MongoClient schoolMongoClient(MongoProperties mongo) {
+        MongoCredential credential = MongoCredential.createCredential(mongo.getUsername(), mongo.getDatabase(), mongo.getPassword());
+        ConnectionString connectionString = new ConnectionString(mongo.getUri());
+        System.out.println("hey ====> " + mongo.getUsername());
+        MongoClientSettings clientSettings = MongoClientSettings.builder()
+                .credential(credential)
+                .applyConnectionString(connectionString)
+                .build();
+        return MongoClients.create(clientSettings);
+    }
+
+    @Bean
+    public MongoClient bankMongoClient(MongoProperties mongo) {
+        MongoCredential credential = MongoCredential.createCredential(mongo.getUsername(), mongo.getDatabase(), mongo.getPassword());
+        ConnectionString connectionString = new ConnectionString(mongo.getUri());
+        System.out.println("hey ====> " + mongo.getUsername());
+        MongoClientSettings clientSettings = MongoClientSettings.builder()
+                .credential(credential)
+                .applyConnectionString(connectionString)
+                .build();
+        return MongoClients.create(clientSettings);
     }
 }

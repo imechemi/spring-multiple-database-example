@@ -3,6 +3,13 @@ spring:
   data:
     mongodb:
       school:
+        uri: mongodb://localhost:27017
         database: schooldb
+        username: dba
+        password: dba
       bank:
+        uri: mongodb://localhost:27017
         database: bankdb
+        username: banker
+        password: banker
+
