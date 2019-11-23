@@ -1,0 +1,8 @@
+
+spring:
+  data:
+    mongodb:
+      school:
+        database: schooldb
+      bank:
+        database: bankdb
